@@ -1,0 +1,20 @@
+{
+  "files": {
+    "main.css": "/ui-kanban-todo-app/static/css/main.2b24ace2.chunk.css",
+    "main.js": "/ui-kanban-todo-app/static/js/main.e1aecdb3.chunk.js",
+    "main.js.map": "/ui-kanban-todo-app/static/js/main.e1aecdb3.chunk.js.map",
+    "runtime-main.js": "/ui-kanban-todo-app/static/js/runtime-main.8e955ab7.js",
+    "runtime-main.js.map": "/ui-kanban-todo-app/static/js/runtime-main.8e955ab7.js.map",
+    "static/js/2.8b4e66c7.chunk.js": "/ui-kanban-todo-app/static/js/2.8b4e66c7.chunk.js",
+    "static/js/2.8b4e66c7.chunk.js.map": "/ui-kanban-todo-app/static/js/2.8b4e66c7.chunk.js.map",
+    "index.html": "/ui-kanban-todo-app/index.html",
+    "static/css/main.2b24ace2.chunk.css.map": "/ui-kanban-todo-app/static/css/main.2b24ace2.chunk.css.map",
+    "static/js/2.8b4e66c7.chunk.js.LICENSE.txt": "/ui-kanban-todo-app/static/js/2.8b4e66c7.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.8e955ab7.js",
+    "static/js/2.8b4e66c7.chunk.js",
+    "static/css/main.2b24ace2.chunk.css",
+    "static/js/main.e1aecdb3.chunk.js"
+  ]
+}
