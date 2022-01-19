@@ -15,17 +15,19 @@ function App() {
   const [ dataBank, setDataBank] = useState([])
 
   useEffect(() => {
-    setDataBank([{id: GetDashId(), dashName: "Today", tasks: [
-      {id: GetTaskId(), status: "pending", taskPriority: "high", taskTitle: "Some random text", taskDetails: "The detailed description of the specific task max 255 chars."},
-      {id: GetTaskId(), status: "progress", taskPriority: "low", taskTitle: "Do loundry", taskDetails: "Ever have that feeling where you're not sure if you're awake or dreaming?"},
-      {id: GetTaskId(), status: "pending", taskPriority: "med", taskTitle: "He who controls the Spice controls the Universe!", taskDetails: "Let's face it, this is not the worst thing you've caught me doing."},
-    ]},
-    {id: GetDashId(), dashName: "Tomorrow", tasks: [
-      {id: GetTaskId(), status: "done", taskPriority: "low", taskTitle: "Long live the emperor for two rows", taskDetails: "The detailed description of the specific task max 255 chars."},
-      {id: GetTaskId(), status: "pending", taskPriority: "low", taskTitle: "Doctor Who?", taskDetails: "The universe is big. It’s vast and complicated and ridiculous. And sometimes, very rarely, impossible things just happen and we call them miracles."},
-      {id: GetTaskId(), status: "pending", taskPriority: "med", taskTitle: "Hello There", taskDetails: "May the force be with you, young padawan."},
-      {id: GetTaskId(), status: "pending", taskPriority: "high", taskTitle: "Why so serious?", taskDetails: "The detailed description of the specific task max 255 chars."},
-    ]}])
+    setDataBank([
+      {id: GetDashId(), dashName: "Today", tasks: [
+        {id: GetTaskId(), status: "pending", taskPriority: "high", taskTitle: "Some random text", taskDetails: "The detailed description of the specific task max 255 chars."},
+        {id: GetTaskId(), status: "progress", taskPriority: "low", taskTitle: "Do loundry", taskDetails: "Ever have that feeling where you're not sure if you're awake or dreaming?"},
+        {id: GetTaskId(), status: "pending", taskPriority: "med", taskTitle: "He who controls the Spice controls the Universe!", taskDetails: "Let's face it, this is not the worst thing you've caught me doing."},
+      ]},
+      {id: GetDashId(), dashName: "Tomorrow", tasks: [
+        {id: GetTaskId(), status: "done", taskPriority: "low", taskTitle: "Long live the emperor for two rows", taskDetails: "The detailed description of the specific task max 255 chars."},
+        {id: GetTaskId(), status: "pending", taskPriority: "low", taskTitle: "Doctor Who?", taskDetails: "The universe is big. It’s vast and complicated and ridiculous. And sometimes, very rarely, impossible things just happen and we call them miracles."},
+        {id: GetTaskId(), status: "pending", taskPriority: "med", taskTitle: "Hello There", taskDetails: "May the force be with you, young padawan."},
+        {id: GetTaskId(), status: "pending", taskPriority: "high", taskTitle: "Why so serious?", taskDetails: "The detailed description of the specific task max 255 chars."},
+      ]}
+    ])
   }, [])
     
   
@@ -35,7 +37,7 @@ function App() {
 // DASH NAME CHANGE
   const changeDashName = (dashboard, e) => {
     dashboard.dashName = e.target.value
-    console.log("check it happened")
+    console.log("changeDashName function happened")
     setDataBank([...dataBank])
   }
 // END of DASH NAME CHANGE
@@ -43,7 +45,7 @@ function App() {
 
 // UPDATE DASHBOARD
   const updDashboard = (newDash) => {
-    console.log("check it happened new dash")
+    console.log("updDashboard function happened")
     setDataBank([...dataBank, newDash])
   }
 // END of UPDATE DASHBOARD
@@ -59,7 +61,7 @@ function App() {
     } else {
       task.status = "pending"
     }
-    console.log("check it happened")
+    console.log("toogleDone function happened")
     setDataBank(tempData)
     e.stopPropagation() /// NOT WORKING YET !!!!!!!!!!!!!!!
   }
@@ -70,7 +72,7 @@ function App() {
   const addTask = (dashboard) => {
     let tempData = dashboard.tasks
     tempData.push({id: GetTaskId(), status: "pending", taskPriority: "low", taskTitle: "Undefinded", taskDetails: " "})
-    console.log("check it happened")
+    console.log("addTask function happened")
     setDataBank([...dataBank])
     }
 // END of ADD NEW TASK
@@ -86,7 +88,7 @@ function App() {
     else {
       task.taskPriority = "low"
     }
-    console.log("check it happened")
+    console.log("changePrio function happened")
     setDataBank([...dataBank])
 
     e.stopPropagation()
@@ -96,12 +98,9 @@ function App() {
 
 // DELETE TASK
   const deleteTask = (e, dashboard, task) => {
-    for (let i in dashboard.tasks) {
-      if (dashboard.tasks[i] === task) {
-        dataBank[dashboard.id-1].tasks.splice(i, 1)
-      }
-    }
-    console.log("check it happened")
+
+    dashboard.tasks = dashboard.tasks.filter(elemOfTasks => elemOfTasks !== task)
+    console.log("deleteTask function happened")
     setSelectedTask(null)
     setDataBank([...dataBank])
     e.stopPropagation()
@@ -114,9 +113,6 @@ function App() {
   const [selectedTaskPrev, setSelectedTaskPrev] = useState(null)
 
   const selectTask = (dashboard, task) => {
-    
-    console.log(task.id)
-    console.log(selectedTaskPrev)
 
     if (task.id === selectedTaskPrev) {
       setSelectedTaskPrev(null)
