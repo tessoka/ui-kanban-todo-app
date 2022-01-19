@@ -1,7 +1,7 @@
 import React from 'react'
 import { useState } from 'react'
 
-function TaskDetails({selectedTask, updTask}) {
+function TaskDetails({selectedTask, updTask, changePrio}) {
 
   
   let dashboard = ""
@@ -26,12 +26,12 @@ function TaskDetails({selectedTask, updTask}) {
     <div className="task-details">
       <div className="details-header details">
         <div className="details-task-header">TaskID: {task.id}</div>
-        <textarea className="details-task-title" value={newTaskTitle} onChange={(e) => changeTaskTitle(e.target.value)}/>
+        <textarea className="details-task-title" value={newTaskTitle === "Undefined" ? "" : newTaskTitle} placeholder={newTaskTitle === "Undefined" || newTaskTitle === "" ? "Undefined" : ""} onChange={(e) => changeTaskTitle(e.target.value)}/>
       </div>
 
       <div className="details-top details">
         <h3>Details</h3>
-        <div className="details-task-prio">Priority:<p>{task.taskPriority} priority</p></div>
+        <div className="details-task-prio">Priority:<p className={`task-prio prio-${task.taskPriority}`} onClick={(e) => changePrio(e, task)}>{task.taskPriority} priority</p></div>
         <div className="details-task-desc">Description:</div>
         <textarea type="textarea" value={newTaskDetails} onChange={(e) => changeTaskDesc(e.target.value)}/>
       </div>

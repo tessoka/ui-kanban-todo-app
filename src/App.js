@@ -29,9 +29,19 @@ function App() {
       ]}
     ])
   }, [])
-    
-  
+
   console.log(dataBank)
+
+
+  // CHECK # of DASHBOARDS
+    const [ dashLimit, setDashLimit ] = useState(false)
+  
+    useEffect(() => {
+      if (dataBank.length >= 5) {
+        setDashLimit(true)
+      }
+    }, [dataBank.length]);
+  // CHECK # of DASHBOARDS
 
 
 // DASH NAME CHANGE
@@ -43,12 +53,12 @@ function App() {
 // END of DASH NAME CHANGE
 
 
-// UPDATE DASHBOARD
+// CREATE DASHBOARD
   const updDashboard = (newDash) => {
     console.log("updDashboard function happened")
     setDataBank([...dataBank, newDash])
   }
-// END of UPDATE DASHBOARD
+// END of CREATE DASHBOARD
 
 
 // MARK TASK AS DONE
@@ -71,7 +81,7 @@ function App() {
 // ADD NEW TASK
   const addTask = (dashboard) => {
     let tempData = dashboard.tasks
-    tempData.push({id: GetTaskId(), status: "pending", taskPriority: "low", taskTitle: "Undefinded", taskDetails: " "})
+    tempData.push({id: GetTaskId(), status: "pending", taskPriority: "low", taskTitle: "Undefined", taskDetails: " "})
     console.log("addTask function happened")
     setDataBank([...dataBank])
     }
@@ -84,8 +94,7 @@ function App() {
       task.taskPriority = "med"
     } else if (task.taskPriority === "med") {
       task.taskPriority = "high"
-    }
-    else {
+    } else {
       task.taskPriority = "low"
     }
     console.log("changePrio function happened")
@@ -98,7 +107,6 @@ function App() {
 
 // DELETE TASK
   const deleteTask = (e, dashboard, task) => {
-
     dashboard.tasks = dashboard.tasks.filter(elemOfTasks => elemOfTasks !== task)
     console.log("deleteTask function happened")
     setSelectedTask(null)
@@ -132,6 +140,7 @@ function App() {
 // DELETED DASHBOARD
   const deleteDash = (dashboard) => {
     setDataBank(dataBank.filter(dash => dash !== dashboard))
+    setDashLimit(false)
   }
 // END of DELETE DASHBOARD
 
@@ -151,15 +160,15 @@ function App() {
       <div className="dashboard-container">
         <div className="todo-container">
           <div className="header-box">
-            <h1>To Do Board</h1>
-            <NewDashboard onCreate={updDashboard} />
+            <h1>The Kanban App</h1>
+            <NewDashboard dashLimit={dashLimit} onCreate={updDashboard} />
           </div>
           <div className="dashboard-box">
             {
               dataBank.map(dashboard => { return (
                 <div className="board" key={dashboard.id}>
                   <div className="board-header">
-                    <input type="text" name="dashname" id="dashname" onChange={(e) => changeDashName(dashboard, e)} value={dashboard.dashName} onFocus={() => setShowCloseButton(false)} onBlur={() => setShowCloseButton(true)}/>
+                    <input type="text" name="dashname" id="dashname" onChange={(e) => changeDashName(dashboard, e)} value={dashboard.dashName === "" ? "" : dashboard.dashName} placeholder={dashboard.dashName === "" ? "Undefined" : ""} onFocus={() => setShowCloseButton(false)} onBlur={() => setShowCloseButton(true)}/>
                     {showCloseButton && <div className="board-delete" onClick={() => deleteDash(dashboard)}>x</div>}
                   </div>
 
@@ -173,7 +182,7 @@ function App() {
           </div>
         </div>
         
-        { showTaskDesc && <TaskDetails selectedTask={selectedTask} updTask={updTask}/>}
+        { showTaskDesc && <TaskDetails selectedTask={selectedTask} updTask={updTask} changePrio={changePrio}/>}
 
       </div>
     </div>
