@@ -1,10 +1,11 @@
 import React from 'react'
+import GetDashId from '../utils/GetDashId.js'
 
-function NewDashboard({getDashId, onCreate}) {
+function NewDashboard({ onCreate }) {
 
 // ADD NEW DASHBOARD
 const newDash = () => {
-  let newDash = {id: getDashId, dashName: "Undefined", tasks: []}
+  let newDash = {id: GetDashId(), dashName: "Undefined", tasks: []}
   onCreate(newDash)
 }
 // END of ADD NEW DASHBOARD
