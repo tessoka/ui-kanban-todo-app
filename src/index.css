@@ -14,6 +14,7 @@ html {
 body {
   font-size: 1.4rem;
   background-color: #fff;
+  overflow: hidden;
 }
 
 .App {
@@ -26,7 +27,7 @@ body {
 }
 
 .dashboard-container {
-  border: 1px solid purple;
+  /* border: 1px solid purple; */
   display: flex;
   justify-content: space-between;
   
@@ -36,7 +37,9 @@ body {
 
 .task-details {
   /* border: 1px solid red; */
-  width: 250px;
+  min-width: 250px;
+  max-width: 250px;
+
   /* height: 100%; */
   
   margin-left: 20px;
@@ -109,6 +112,26 @@ body {
   border-radius: 10px;
 }
 
+.details textarea::-webkit-input-placeholder {
+  color: black;
+}
+
+.details textarea::-moz-placeholder {
+  color: black;
+}
+
+.details textarea:-ms-input-placeholder {
+  color: black;
+}
+
+.details textarea::-ms-input-placeholder {
+  color: black;
+}
+
+.details textarea::placeholder {
+  color: black;
+}
+
 .details textarea:focus {
   background-color: rgba(52, 152, 219, 0.1);
   border: 1px dashed rgba(52, 152, 219, 0.25);
@@ -147,7 +170,7 @@ body {
 
 .todo-container {
   /* border: 1px solid red; */
-  max-width: 1200px;
+  max-width: 1340px;
   background-color: white;
   border-radius: 10px;
 }
@@ -157,10 +180,12 @@ body {
   padding: 15px;
   display: flex;
   justify-content: space-between;
+  gap: 25px;
 }
 
 .header-box h1 {
   /* border: 1px solid red; */
+  min-width: 250px;
   color: #3498db;
   /* margin: auto 25px; */
   display: flex;
@@ -233,11 +258,31 @@ body {
   width: 100%;
 }
 
+.board input::-webkit-input-placeholder {
+  color: #3498db;
+}
+
+.board input::-moz-placeholder {
+  color: #3498db;
+}
+
+.board input:-ms-input-placeholder {
+  color: #3498db;
+}
+
+.board input::-ms-input-placeholder {
+  color: #3498db;
+}
+
+.board input::placeholder {
+  color: #3498db;
+}
+
 .board input:focus {
   background-color: rgba(52, 152, 219, 0.15);
 }
 
-.board-create {
+.btn-board-create {
   background-color: transparent;
   border: 2px dashed #3498db;
   border-radius: 15px;
@@ -256,10 +301,28 @@ body {
   cursor: pointer;
 }
 
-.board-create:hover {
+.btn-board-create:hover {
   border: none;
   color: white;
   background-color: rgba(52, 152, 219, 0.75);
+}
+
+.btn-disabled {
+  background-color: rgba(231, 77, 60, 0.25);
+  border: 2px dashed #c0392b;
+  border-radius: 15px;
+  
+  width: 200px;
+  height: 40px;
+  
+  text-transform: uppercase;
+  color: #c0392b;
+  font-family: inherit;
+  font-weight: 700;
+  font-size: 1.4rem;
+  letter-spacing: 1px;
+
+  text-align: center;
 }
 
 .task-card {
@@ -361,6 +424,17 @@ body {
   letter-spacing: 1px;
   /* color: #2980b9; */
   cursor: pointer;
+}
+
+.task-edit {
+  /* border: 1px solid red; */
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+.edit-logo {
+  color: #3498db;
 }
 
 .add-task {
