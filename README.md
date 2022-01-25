@@ -7,3 +7,5 @@ Focusing on:
 - CSS precision
 - State handling
 
+Url: https://tessoka.github.io/ui-kanban-todo-app/
+
