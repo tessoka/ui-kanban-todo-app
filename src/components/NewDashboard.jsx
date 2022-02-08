@@ -3,9 +3,6 @@ import GetDashId from '../utils/GetDashId.js'
 
 function NewDashboard({ dashLimit, onCreate }) {
 
-  console.log("dashLimit:")
-  console.log(dashLimit)
-
   // ADD NEW DASHBOARD
   const newDash = () => {
     let newDash = {id: GetDashId(), dashName: "", tasks: []}

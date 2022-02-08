@@ -1,12 +1,13 @@
-import { useState, useRef } from 'react'
+import { useState, useContext } from 'react'
 import EditLogo from '../svg/edit-d-text'
+import { DraggedItemContext } from '../utils/Context'
 
 
-function Task({dashboard, task, deleteTask, changePrio, toggleDone, selectTask}) {
+function Task({dashboard, task, deleteTask, changePrio, toggleDone, selectTask, updateDatabankPostDrag}) {
 
   const [ showText, setShowText ] = useState(false)
   const [ isDragging, setIsDragging ] = useState(false)
-  const dragItem = useRef()
+  const { draggedTask, setDraggedTask } = useContext(DraggedItemContext)
 
   let toggleDescription = (e) => {
     setShowText(!showText)
@@ -14,10 +15,11 @@ function Task({dashboard, task, deleteTask, changePrio, toggleDone, selectTask})
   }
 
   const handleDragStart = (e) => {
+    console.log("drag start:")
     console.log(dashboard.id)
     console.log(task.id)
-    console.log("dragged")
-    dragItem.current = {dashId: dashboard.id, taskId: task.id}
+    console.log("---------------------")
+    setDraggedTask({dashId: dashboard.id, taskId: task.id})
     setTimeout(() => {
       setIsDragging(true)
     }, 0);
@@ -25,13 +27,14 @@ function Task({dashboard, task, deleteTask, changePrio, toggleDone, selectTask})
 
   const handleDragEnd = () => {
     setIsDragging(false)
+    updateDatabankPostDrag()
   }
 
   return (
     <div className={isDragging ? "task-card dragging" : "task-card"} key={task.id} draggable onDragStart={(e) => handleDragStart(e)} onDragEnd={(e) => handleDragEnd(e)}>
       <div className="card-top">
         <div className="title-text">{task.taskTitle}</div>
-        <div className="card-top-x" onClick={(e) => {deleteTask(e, dashboard, task)}}>x</div>
+        <div className="card-top-x" onClick={(e) => {deleteTask(dashboard, task, e)}}>x</div>
       </div>
       <div className="card-mid" onClick={(e) => toggleDescription(e)}>
         { showText ? task.taskDetails : "Click for details..."}

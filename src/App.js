@@ -7,6 +7,7 @@ import TaskDetails from './components/TaskDetails.jsx'
 import GetTaskId from './utils/GetTaskId.js'
 import GetDashId from './utils/GetDashId.js'
 
+import { DraggedItemContext, DraggedItemNewPositionContext } from './utils/Context'
 
 
 
@@ -14,6 +15,7 @@ function App() {
   
   const [ dataBank, setDataBank] = useState([])
   const [ newBoardCode, setNewBoardCode ] = useState(null)
+  const [ draggedTask, setDraggedTask ] = useState({})
 
   useEffect(() => {
     setDataBank([
@@ -107,7 +109,7 @@ function App() {
 
 
 // DELETE TASK
-  const deleteTask = (e, dashboard, task) => {
+  const deleteTask = (dashboard, task, e) => {
     dashboard.tasks = dashboard.tasks.filter(elemOfTasks => elemOfTasks !== task)
     console.log("deleteTask function happened")
     setSelectedTask(null)
@@ -157,43 +159,63 @@ function App() {
 
 
   const handleDragEnter = (e, dashboard) => {
-    console.log(dashboard.id)
-    console.log("entered drag")
-    setNewBoardCode()
+    setNewBoardCode(dashboard.id)
+  }
+
+  const updateDatabankPostDrag = () => {
+    console.log("update inisiated")
+    const [selectedTask] = dataBank.filter(board => board.id === draggedTask.dashId)[0].tasks.filter(task => task.id === draggedTask.taskId)
+    const selectedBoard = dataBank.filter(board => board.id === draggedTask.dashId)[0]
+    const newBoard = dataBank.filter(board => board.id === newBoardCode)[0]
+    // console.log(dataBank.filter(board => board.id === draggedTask.dashId)[0].tasks.filter(task => task.id === draggedTask.taskId))
+    // console.log(selectedTask)
+    // console.log(selectedBoard)
+    // console.log(newBoard)
+
+    selectedBoard.tasks = selectedBoard.tasks.filter(elemOfTasks => elemOfTasks !== selectedTask)
+    newBoard.tasks.push(selectedTask)
+
+    setDataBank([...dataBank])
   }
 
 
   return (
-    <div className="App">
-      <div className="dashboard-container">
-        <div className="todo-container">
-          <div className="header-box">
-            <h1>The Kanban UI</h1>
-            <NewDashboard dashLimit={dashLimit} onCreate={updDashboard} />
-          </div>
-          <div className="dashboard-box">
-            {
-              dataBank.map(dashboard => { return (
-                <div className="board" key={dashboard.id} onDragEnter={(e) => handleDragEnter(e, dashboard)}>
-                  <div className="board-header">
-                    <input type="text" name="dashname" id="dashname" onChange={(e) => changeDashName(dashboard, e)} value={dashboard.dashName === "" ? "" : dashboard.dashName} placeholder={dashboard.dashName === "" ? "Undefined" : ""} onFocus={() => setShowCloseButton(false)} onBlur={() => setShowCloseButton(true)}/>
-                    {showCloseButton && <div className="board-delete" onClick={() => deleteDash(dashboard)}>x</div>}
+    <DraggedItemContext.Provider value={{ draggedTask, setDraggedTask }}>
+    <DraggedItemNewPositionContext.Provider value={{ newBoardCode, setNewBoardCode }}>
+
+      <div className="App">
+        <div className="dashboard-container">
+          <div className="todo-container">
+            <div className="header-box">
+              <h1>The Kanban UI</h1>
+              <NewDashboard dashLimit={dashLimit} onCreate={updDashboard} />
+            </div>
+            <div className="dashboard-box">
+              {
+                dataBank.map(dashboard => { return (
+                  <div className="board" key={dashboard.id} onDragEnter={(e) => handleDragEnter(e, dashboard)}>
+                    <div className="board-header">
+                      <input type="text" name="dashname" id="dashname" onChange={(e) => changeDashName(dashboard, e)} value={dashboard.dashName === "" ? "" : dashboard.dashName} placeholder={dashboard.dashName === "" ? "Undefined" : ""} onFocus={() => setShowCloseButton(false)} onBlur={() => setShowCloseButton(true)}/>
+                      {showCloseButton && <div className="board-delete" onClick={() => deleteDash(dashboard)}>x</div>}
+                    </div>
+
+                    {dashboard.tasks.map(task => 
+                      <Task key={task.id} dashboard={dashboard} task={task} deleteTask={deleteTask} changePrio={changePrio} toggleDone={toggleDone} selectTask={selectTask} updateDatabankPostDrag={updateDatabankPostDrag}/>
+                    )}
+                    <AddTask dashboard={dashboard} addTask={addTask} />
                   </div>
-
-                  {dashboard.tasks.map(task => 
-                    <Task key={task.id} dashboard={dashboard} task={task} deleteTask={deleteTask} changePrio={changePrio} toggleDone={toggleDone} selectTask={selectTask}/>
-                  )}
-                  <AddTask dashboard={dashboard} addTask={addTask} />
-                </div>
-              )})
-            }
+                )})
+              }
+            </div>
           </div>
-        </div>
-        
-        { showTaskDesc && <TaskDetails selectedTask={selectedTask} updTask={updTask} changePrio={changePrio}/>}
+          
+          { showTaskDesc && <TaskDetails selectedTask={selectedTask} updTask={updTask} changePrio={changePrio}/>}
 
+        </div>
       </div>
-    </div>
+
+    </DraggedItemNewPositionContext.Provider>
+    </DraggedItemContext.Provider>
   );
 }
 
