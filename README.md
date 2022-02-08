@@ -12,8 +12,9 @@ This is an early Frontend project of a todo app which was written in November 20
 
 ## Built with
 - React.js
+- Basic drag & drop of tasks between groups
 - Semantic HTML5 markup
-- State handling
+- State handling & storing with useContext
 - CSS Flexbox
 
 ## Images
@@ -21,4 +22,3 @@ This is an early Frontend project of a todo app which was written in November 20
 
 ## Preview
 https://tessoka.github.io/ui-kanban-todo-app/
-
