@@ -1,18 +1,34 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import EditLogo from '../svg/edit-d-text'
 
 
 function Task({dashboard, task, deleteTask, changePrio, toggleDone, selectTask}) {
 
   const [ showText, setShowText ] = useState(false)
+  const [ isDragging, setIsDragging ] = useState(false)
+  const dragItem = useRef()
 
   let toggleDescription = (e) => {
     setShowText(!showText)
     e.stopPropagation()
   }
 
+  const handleDragStart = (e) => {
+    console.log(dashboard.id)
+    console.log(task.id)
+    console.log("dragged")
+    dragItem.current = {dashId: dashboard.id, taskId: task.id}
+    setTimeout(() => {
+      setIsDragging(true)
+    }, 0);
+  }
+
+  const handleDragEnd = () => {
+    setIsDragging(false)
+  }
+
   return (
-    <div className={task.status === "done" ? 'task-done task-card' : task.status === "progress" ? 'task-progress task-card' : 'task-card' } key={task.id} onDoubleClick={(e) => toggleDone(e, task)}>
+    <div className={isDragging ? "task-card dragging" : "task-card"} key={task.id} draggable onDragStart={(e) => handleDragStart(e)} onDragEnd={(e) => handleDragEnd(e)}>
       <div className="card-top">
         <div className="title-text">{task.taskTitle}</div>
         <div className="card-top-x" onClick={(e) => {deleteTask(e, dashboard, task)}}>x</div>
