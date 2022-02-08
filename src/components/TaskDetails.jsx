@@ -18,6 +18,7 @@ function TaskDetails({selectedTask, updTask, changePrio}) {
   }
 
   const changeTaskTitle = (value) => {
+    console.log("change task title was kicked off")
     setNewTaskTitle(value)
   }
 

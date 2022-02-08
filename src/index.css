@@ -13,15 +13,14 @@ html {
 
 body {
   font-size: 1.4rem;
-  background-color: #fff;
-  overflow: hidden;
+  background: rgba(41, 127, 185, 0.75);
+  /* overflow: hidden; */
 }
 
 .App {
   /* WHHAAAATTT BORDER????? */
-  /* border: 1px solid #2980b9;  */
+  /* border: 1px solid red;  */
   min-height: 100vh;
-  background: rgba(41, 127, 185, 0.75);
   display: flex;
   justify-content: center;
 }
@@ -330,6 +329,12 @@ body {
   border-radius: 15px;
   margin: 10px auto;
   padding: 10px; 
+}
+
+.task-card.dragging {
+  display: none;
+  background-color: red;
+  opacity: 0.2;
 }
 
 .task-done {
