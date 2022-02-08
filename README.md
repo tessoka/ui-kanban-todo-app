@@ -17,6 +17,8 @@ This is an early Frontend project of a todo app which was written in November 20
 - CSS Flexbox
 
 ## Images
+![ui-kamban-todo-app](https://github.com/tessoka/ui-kanban-todo-app/blob/eb839860619bf43134aabc6950dbc7595d9dac44/Main.jpg)
 
+## Preview
 Url: https://tessoka.github.io/ui-kanban-todo-app/
 
